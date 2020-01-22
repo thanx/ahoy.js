@@ -17,7 +17,7 @@ let config = {
   withCredentials: false
 };
 
-let ahoy = window.ahoy || window.Ahoy || {};
+let ahoy = {};
 
 ahoy.configure = function (options) {
   for (let key in options) {
@@ -30,7 +30,6 @@ ahoy.configure = function (options) {
 // legacy
 ahoy.configure(ahoy);
 
-let $ = window.jQuery || window.Zepto || window.$;
 let visitId, visitorId, track;
 let visitTtl = 4 * 60; // 4 hours
 let visitorTtl = 2 * 365 * 24 * 60; // 2 years
@@ -152,6 +151,7 @@ function CSRFProtection(xhr) {
 }
 
 function sendRequest(url, data, success) {
+  let $ = window.jQuery || window.Zepto || window.$;
   if (canStringify) {
     if ($ && $.ajax) {
       $.ajax({
@@ -460,11 +460,5 @@ ahoy.start = function () {
 
   ahoy.start = function () {};
 };
-
-documentReady(function() {
-  if (config.startOnReady) {
-    ahoy.start();
-  }
-});
 
 export default ahoy;
